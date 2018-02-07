@@ -6,21 +6,23 @@ import store from '../store';
 
 axios.defaults.baseURL = 'http://www.myapi.cc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-axios.defaults.timeout = 1000;
+axios.defaults.timeout = 5000;
 
 axios.interceptors.request.use(function (config) {
-    store.commit('setLoadingState', true);
+    store.dispatch('SET_LOADING_STATE', true);
     if (localStorage.token) {
         config.headers.Authorization = localStorage.token;
     }
     return config;
 }, function (error) {
+    store.dispatch('SET_LOADING_STATE', false);
     return Promise.reject(error);
 });
 axios.interceptors.response.use(function (response) {
-    store.commit('setLoadingState', false);
+    store.dispatch('SET_LOADING_STATE', false);
     return checkStatus(response);
 }, function (error) {
+    store.dispatch('SET_LOADING_STATE', false);
     return Promise.reject(error);
 });
 

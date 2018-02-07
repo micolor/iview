@@ -17,7 +17,7 @@
         },
         computed: {
             loadingState () {
-                return this.$store.state.app.loadingState;
+                return this.$store.state.loadingState;
             }
         },
         mounted () {

@@ -10,14 +10,10 @@
                     <Icon type="ios-search-strong"></Icon>
                     用户管理
                 </p>
-                <Row>
-                    <Input v-model="searchConName" placeholder="请输入姓名搜搜..." style="width: 200px"/>
-                    <span @click="handleSearch" style="margin: 0 10px;"><Button type="primary" icon="search">搜索</Button></span>
-                    <Button @click="handleCancel" type="ghost">取消</Button>
-                </Row>
                 <Ctabel :CtableColumns="columns"
                         :CtableData="data"
                         :CtableTotal="total"
+                        :SearchDate = "searchDate"
                         @changepage="changepage">
                 </Ctabel>
             </Card>
@@ -26,10 +22,17 @@
 </template>
 <script>
     import Ctabel from '../commpoents/Ctable/Ctable';
+    import Cserach from '../commpoents/Ctable/Cserach';
+
     export default {
         data () {
             return {
-                searchConName: '',
+                data: [],
+                nowPage: 1,
+                pageSize: 10,
+                total: 0,
+                sortBy: '',
+                searchBy: {},
                 columns: [
                     {
                         title: '姓名',
@@ -45,13 +48,51 @@
                     },
                     {
                         title: '创建时间',
-                        key: 'created_at'
+                        key: 'created_at',
+                        sortable: true
                     }
                 ],
-                data: [],
-                nowPage: 1,
-                pageSize: 10,
-                total: 0
+                searchDate: {
+                    fields: [
+                        {
+                            title: '性别',
+                            type: 'select',
+                            name: 'sex',
+                            options: {
+                                list: [
+                                    {
+                                        label: '红方',
+                                        value: 0
+                                    },
+                                    {
+                                        label: '蓝方',
+                                        value: 1
+                                    }
+                                ],
+                                filterable: false,
+                                multiple: false
+                            },
+                            val: '',
+                            isEq: 'like'
+                        },
+                        {
+                            title: '姓名',
+                            type: 'text',
+                            name: 'name',
+                            val: '',
+                            isEq: 'like',
+                            placeholder: '请输入姓名...'
+                        },
+                        {
+                            title: '创建时间',
+                            type: 'daterange',
+                            name: 'created_at',
+                            val: '',
+                            isEq: 'like',
+                            placeholder: '选择日期.'
+                        }
+                    ]
+                }
             };
         },
         methods: {
@@ -59,7 +100,9 @@
                 var _this = this;
                 this.$http.post('api/user/list', {
                     page: _this.nowPage,
-                    limit: _this.pageSize
+                    pageSize: _this.pageSize,
+                    sortBy: _this.sortBy,
+                    searchBy: _this.searchBy
                 }).then(function (res) {
                     _this.data = res.data.data.data;
                     _this.total = res.data.data.total;
@@ -68,19 +111,20 @@
             changepage (index) {
                 this.nowPage = index.nowPage;
                 this.pageSize = index.pageSize;
+                this.sortBy = index.sortBy;
                 this.data = this.init();
-            },
-            search () {
-                return this.data;
             },
             handleSearch () {
-                this.data = this.init();
             },
             handleCancel () {
+                this.nowPage = 1;
+                this.pageSize = 10;
+                this.sortBy = '';
                 this.data = this.init();
             }
         },
         components: {
+            Cserach,
             Ctabel
         },
         mounted () {
