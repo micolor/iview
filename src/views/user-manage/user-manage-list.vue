@@ -13,7 +13,7 @@
                 <Ctabel :CtableColumns="columns"
                         :CtableData="data"
                         :CtableTotal="total"
-                        :SearchDate = "searchDate"
+                        :SearchDate="searchDate"
                         @changepage="changepage">
                 </Ctabel>
             </Card>
@@ -22,17 +22,16 @@
 </template>
 <script>
     import Ctabel from '../commpoents/Ctable/Ctable';
-    import Cserach from '../commpoents/Ctable/Cserach';
 
     export default {
         data () {
             return {
                 data: [],
                 nowPage: 1,
-                pageSize: 10,
+                pageSize: 20,
                 total: 0,
                 sortBy: '',
-                searchBy: {},
+                searchBy: '',
                 columns: [
                     {
                         title: '姓名',
@@ -73,7 +72,7 @@
                                 multiple: false
                             },
                             val: '',
-                            isEq: 'like'
+                            isEq: 'eq'
                         },
                         {
                             title: '姓名',
@@ -88,7 +87,7 @@
                             type: 'daterange',
                             name: 'created_at',
                             val: '',
-                            isEq: 'like',
+                            isEq: 'between',
                             placeholder: '选择日期.'
                         }
                     ]
@@ -112,19 +111,11 @@
                 this.nowPage = index.nowPage;
                 this.pageSize = index.pageSize;
                 this.sortBy = index.sortBy;
-                this.data = this.init();
-            },
-            handleSearch () {
-            },
-            handleCancel () {
-                this.nowPage = 1;
-                this.pageSize = 10;
-                this.sortBy = '';
+                this.searchBy = index.searchBy;
                 this.data = this.init();
             }
         },
         components: {
-            Cserach,
             Ctabel
         },
         mounted () {
