@@ -5,11 +5,11 @@ import qs from 'qs';
 import store from '../store';
 
 axios.defaults.baseURL = 'http://www.myapi.cc';
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.timeout = 5000;
 
 axios.interceptors.request.use(function (config) {
     store.dispatch('SET_LOADING_STATE', true);
+    config.headers.Accept = 'application/json';
     if (localStorage.token) {
         config.headers.Authorization = localStorage.token;
     }

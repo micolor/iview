@@ -97,7 +97,7 @@
         methods: {
             init () {
                 var _this = this;
-                this.$http.post('api/user/list', {
+                this.$http.post('api/user/index', {
                     page: _this.nowPage,
                     pageSize: _this.pageSize,
                     sortBy: _this.sortBy,
