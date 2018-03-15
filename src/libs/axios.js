@@ -6,7 +6,6 @@ import store from '../store';
 
 axios.defaults.baseURL = 'http://www.myapi.cc';
 axios.defaults.timeout = 5000;
-
 axios.interceptors.request.use(function (config) {
     store.dispatch('SET_LOADING_STATE', true);
     config.headers.Accept = 'application/json';

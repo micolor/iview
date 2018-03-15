@@ -45,5 +45,22 @@ module.exports = merge(webpackBaseConfig, {
                 'text-editor.vue'
             ]
         })
-    ]
+    ],
+    devServer: {
+        historyApiFallback: true,
+        hot: true,
+        inline: true,
+        progress: true,
+        port: 3000,
+        proxy: {
+            '/api/*': {
+                target: 'http://www.myapi.cc',
+                changeOrigin: true,
+                secure: false,
+                pathRewrite:{
+                    '^/api': '/'
+                }
+            }
+        }
+    }
 });
