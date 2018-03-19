@@ -175,18 +175,6 @@ export const appRouter = [
 
         ]
     },
-    // {
-    //     path: '/charts',
-    //     icon: 'ios-analytics',
-    //     name: 'charts',
-    //     title: '图表',
-    //     component: Main,
-    //     children: [
-    //         { path: 'pie', title: '饼状图', name: 'pie', icon: 'ios-pie', component: resolve => { require('@/views/access/access.vue') },
-    //         { path: 'histogram', title: '柱状图', name: 'histogram', icon: 'stats-bars', component: resolve => { require('@/views/access/access.vue') }
-
-    //     ]
-    // },
     {
         path: '/tables',
         icon: 'ios-grid-view',
@@ -202,24 +190,14 @@ export const appRouter = [
         ]
     },
     {
-        path: '/advanced-router',
-        icon: 'ios-infinite',
-        name: 'advanced-router',
-        title: '高级路由',
+        path: '/system',
+        icon: 'ios-grid-view',
+        name: 'system',
+        title: '系统管理',
         component: Main,
         children: [
-            { path: 'mutative-router', title: '动态路由', name: 'mutative-router', icon: 'link', component: () => import('@/views/advanced-router/mutative-router.vue') },
-            { path: 'argument-page', title: '带参页面', name: 'argument-page', icon: 'android-send', component: () => import('@/views/advanced-router/argument-page.vue') }
-        ]
-    },
-    {
-        path: '/error-page',
-        icon: 'android-sad',
-        title: '错误页面',
-        name: 'errorpage',
-        component: Main,
-        children: [
-            { path: 'index', title: '错误页面', name: 'errorpage_index', component: () => import('@/views/error-page/error-page.vue') }
+            { path: 'menus-list', title: '菜单管理', name: 'menus-list', icon: 'arrow-move', component: () => import('@/views/menus/menus-list.vue') },
+            // { path: 'role-list', title: '角色管理', name: 'role-list', icon: 'arrow-move', component: () => import('@/views/role/role-list.vue') },
         ]
     },
     {
