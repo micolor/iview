@@ -2,7 +2,7 @@
     <div>
         <Card>
             <Row>
-                <Col span="4" v-for="item in SearchDate.fields" style="margin-bottom: 10px;">
+                <Col span="4" :key="item.index" v-for="(item,index) in SearchDate.fields" style="margin-bottom: 10px;">
                 <Row>
                     <span style="font-size: 10px">{{item.title}}</span>
                 </Row>

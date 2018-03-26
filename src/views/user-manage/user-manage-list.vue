@@ -21,8 +21,8 @@
 </template>
 <script>
     import Ctabel from '../commpoents/Ctable/Ctable';
+
     export default {
-        name: 'user-manage-list',
         data () {
             return {
                 data: [],
