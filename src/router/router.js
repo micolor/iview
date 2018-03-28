@@ -210,6 +210,16 @@ export const appRouter = [
             { path: 'mutative-router', title: '用户管理', name: 'user-manage', icon: 'link', component: () => import('@/views/user-manage/user-manage-list.vue') },
         ]
     },
+    {
+        path: '/role-manage',
+        icon: 'ios-infinite',
+        name: 'role-manage',
+        title: '权限管理',
+        component: Main,
+        children: [
+            { path: 'role', title: '权限管理', name: 'role', icon: 'link', component: () => import('@/views/role/role.vue') },
+        ]
+    }
 ];
 
 // 所有上面定义的路由都要写在下面的routers里

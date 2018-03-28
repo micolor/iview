@@ -174,9 +174,7 @@
     methods: {
       tableChange(value){
         let sort = value.to;
-        console.log(value)
         let id = this.tableData[value.to].id
-        console.log(id)
         this.$http.post("api/module/sort",{
           id:id,
           sort:sort
@@ -191,6 +189,7 @@
       },
       changeModal(){
         this.isshow=!this.isshow
+        this.editVal = {}
       },
       delect(params) {
         this.$http.post("api/module/del",{

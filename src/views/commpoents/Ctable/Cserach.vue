@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Card>
+        <Card v-if="SearchDate.fields.length!=0">
             <Row>
                 <Col span="4" :key="item.index" v-for="(item,index) in SearchDate.fields" style="margin-bottom: 10px;">
                 <Row>

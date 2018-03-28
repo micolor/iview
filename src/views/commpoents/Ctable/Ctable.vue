@@ -3,15 +3,16 @@
 //   (列表数据)CtableData     type:Array
 //   (分页总页)CtableTotal    type:Number
 //   (分页所有事件)changepage     type:event  return [pageSize,pageSize]
+//   (ead参数)新增编辑删除
 <template>
     <div>
         <Cserach :SearchDate="SearchDate" @on-search="onSerach" @on-cancel="onSerach"></Cserach>
         <div style="margin:10px 0;overflow: hidden;">
             <div style="float: left;">
-                <ButtonGroup>
-                    <Button type="ghost" icon="document" title="新增" @click="addRow"></Button>
-                    <Button type="ghost" icon="edit" title="编辑" @click="editRow"></Button>
-                    <Button type="ghost" icon="trash-a" title="删除" @click="delRow"></Button>
+                <ButtonGroup >
+                    <Button v-if="!aed||aed.includes('a')" type="ghost"  icon="document" title="新增" @click="addRow"></Button>
+                    <Button v-if="!aed||aed.includes('e')"type="ghost" icon="edit" title="编辑" @click="editRow"></Button>
+                    <Button v-if="!aed||aed.includes('d')"type="ghost" icon="trash-a" title="删除" @click="delRow"></Button>
                 </ButtonGroup>
             </div>
             <div style="float: right;">
@@ -21,8 +22,12 @@
                 </Page>
             </div>
         </div>
-        <Table border :columns="CtableColumns" :data="CtableData" @on-sort-change="onSort"
-               class="margin-top-10" height="620"></Table>
+        <Table ref="table" border 
+                :columns="CtableColumns" 
+                :data="CtableData" 
+                @on-selection-change="onChange"
+                @on-sort-change="onSort"
+                class="margin-top-10" height="620"></Table>
     </div>
 </template>
 <script>
@@ -34,10 +39,12 @@
                 nowPage: 1,
                 pageSize: 20,
                 sortBy: '',
-                searchBy: ''
+                searchBy: '',
+                selected:[]
             };
         },
         props: {
+            aed:String,
             CtableColumns: Array,
             CtableData: Array,
             CtableTotal: Number,
@@ -65,6 +72,9 @@
                 this.searchBy = data.searchBy;
                 this.sendDate();
             },
+            onChange(row){
+                this.selected = row;
+            },
             sendDate () {
                 this.$emit('changepage', {
                     nowPage: this.nowPage,
@@ -74,16 +84,13 @@
                 });
             },
             addRow () {
-                alert('新增');
                 this.$emit('addRow');
             },
             editRow () {
-                alert('编辑');
-                this.$emit('editRow');
+                this.$emit('editRow',this.selected);
             },
             delRow () {
-                alert('删除');
-                this.$emit('delRow');
+                this.$emit('delRow',this.selected);
             }
         },
         components: {
